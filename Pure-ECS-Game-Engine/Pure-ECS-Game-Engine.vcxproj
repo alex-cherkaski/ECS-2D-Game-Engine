@@ -89,7 +89,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Development-Created\Libraries\SDL\SDL2-devel-2.0.12-VC\SDL2-2.0.12\include;C:\Development-Created\Libraries\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;C:\Development-Created\Libraries\SDL\SDL2_mixer-devel-2.0.4-VC\SDL2_mixer-2.0.4\include;C:\Development-Created\Libraries\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Development-Created\Libraries\GLM\glm-0.9.9.7\glm\glm;C:\Development-Created\Libraries\SDL\SDL2-devel-2.0.12-VC\SDL2-2.0.12\include;C:\Development-Created\Libraries\SDL\SDL2_ttf-devel-2.0.15-VC\SDL2_ttf-2.0.15\include;C:\Development-Created\Libraries\SDL\SDL2_mixer-devel-2.0.4-VC\SDL2_mixer-2.0.4\include;C:\Development-Created\Libraries\SDL\SDL2_image-devel-2.0.5-VC\SDL2_image-2.0.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -144,15 +144,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Constants\Constants.cpp" />
-    <ClCompile Include="Source\Engine\Engine.cpp" />
-    <ClCompile Include="Source\Logger\Logger.cpp" />
+    <ClCompile Include="Source\Constants.cpp" />
+    <ClCompile Include="Source\ECS.cpp" />
+    <ClCompile Include="Source\Engine.cpp" />
+    <ClCompile Include="Source\Logger.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Constants\Constants.h" />
-    <ClInclude Include="Source\Logger\Logger.h" />
-    <ClInclude Include="Source\Engine\Engine.h" />
+    <ClInclude Include="Include\Components.h" />
+    <ClInclude Include="Include\Constants.h" />
+    <ClInclude Include="Include\ECS.h" />
+    <ClInclude Include="Include\Logger.h" />
+    <ClInclude Include="Include\Engine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

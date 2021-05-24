@@ -1,6 +1,6 @@
-#include "Engine.h"
-#include "../Logger/Logger.h"
-#include "../Constants/Constants.h"
+#include "../Include/Engine.h"
+#include "../Include/Logger.h"
+#include "../Include/Constants.h"
 
 Engine& Engine::GetEngineInstance()
 {
@@ -40,7 +40,7 @@ void Engine::Initialize()
 		return;
 	}
 
-	// Set OS video mode to fullscreen.
+	// Set OS video mode to full screen.
 	//SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN);
 
 	m_isRunning = true;
