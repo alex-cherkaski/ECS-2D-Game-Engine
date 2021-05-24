@@ -1,7 +1,7 @@
+#include "stdafx.h"
 #include "../Include/Logger.h"
 #include "../Include/Constants.h"
-#include <iostream>
-#include <sstream>
+
 
 void Logger::Log(const std::string & message, ERROR_LEVEL level)
 {

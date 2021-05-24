@@ -1,7 +1,5 @@
 #pragma once
-#include <bitset>
-#include <vector>
-#include <unordered_map>
+#include "stdafx.h"
 #include "../Include/Components.h"
 
 //--------------------------------------------------

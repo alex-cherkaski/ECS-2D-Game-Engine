@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "../Include/Engine.h"
 #include "../Include/Logger.h"
 #include "../Include/Constants.h"

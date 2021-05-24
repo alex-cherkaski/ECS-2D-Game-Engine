@@ -1,4 +1,4 @@
-#pragma once
+#include "stdafx.h"
 #include "../Include/Constants.h"
 
 const char* Constants::Window::WINDOW_NAME = "Engine";

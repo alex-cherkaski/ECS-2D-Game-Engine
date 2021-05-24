@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "../Include/ECS.h"
 
 ComponentID IComponent::s_nextComponentID = 0;
