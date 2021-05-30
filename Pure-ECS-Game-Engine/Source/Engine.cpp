@@ -47,6 +47,12 @@ void Engine::Initialize()
 	m_isRunning = true;
 }
 
+void Engine::LoadLevel(unsigned level)
+{
+	Entity entity = m_registry.CreateEntity();
+	m_registry.AddComponent<TransformComponent>(entity, glm::vec2(0, 0), glm::vec2(0, 0), 0.0f);
+}
+
 void Engine::Run()
 {
 	while (m_isRunning)
@@ -64,7 +70,7 @@ void Engine::Destroy()
 	SDL_Quit();
 }
 
-Engine::Engine() : m_windowWidth(0), m_windowHeight(0), m_isRunning(false), m_window(nullptr), m_renderer(nullptr)
+Engine::Engine() : m_windowWidth(0), m_windowHeight(0), m_isRunning(false), m_window(nullptr), m_renderer(nullptr), m_registry(Registry::GetRegistryInstance())
 {
 }
 

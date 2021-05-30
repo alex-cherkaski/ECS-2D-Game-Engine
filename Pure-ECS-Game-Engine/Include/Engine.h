@@ -1,5 +1,6 @@
 #pragma once
-#include <SDL.h>
+#include "stdafx.h"
+#include "ECS.h"
 
 class Engine
 {
@@ -16,6 +17,7 @@ public:
 	Engine& operator=(Engine&& other) = delete;
 
 	void Initialize();
+	void LoadLevel(unsigned level);
 	void Run();
 	void Destroy();
 
@@ -35,6 +37,6 @@ private:
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
 
-
+	Registry& m_registry;
 };
 
