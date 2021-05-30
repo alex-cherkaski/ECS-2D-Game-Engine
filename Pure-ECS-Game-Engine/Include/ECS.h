@@ -76,6 +76,7 @@ public:
 	void Resize(size_t newSize);
 
 	void InsertComponent(const Entity entity, const TComponent& component);
+	TComponent& GetComponent(const Entity entity);
 
 private:
 	std::vector<TComponent> m_componentVector;
@@ -92,7 +93,7 @@ class Registry;
 class System
 {
 public:
-	System(const Registry& registry);
+	System(Registry& registry);
 	virtual ~System() = default;
 
 	// Systems cannot be copied;
@@ -103,8 +104,8 @@ public:
 	System(System&& other) = delete;
 	System& operator=(System&& other) = delete;
 
-	void Update();
-	void Render();
+	virtual void Update() = 0;
+	virtual void Render(SDL_Renderer* rendere) = 0;
 
 	void AddEntity(const Entity entity);
 	void DeleteEntity(const Entity entity);
@@ -114,8 +115,8 @@ public:
 
 	ComponentSignature GetComponentSignature() const;
 
-private:
-	const Registry& m_registry;
+protected:
+	Registry& m_registry;
 	ComponentSignature m_systemComponentSignature;
 	std::set<Entity> m_systemEntities;
 };
@@ -156,6 +157,7 @@ public:
 	// System management
 	template<typename TSystem> void AddSystem();
 	template<typename TSystem> TSystem& GetSystem();
+	std::vector<std::shared_ptr<System>> GetSystems() const;
 	template<typename TSystem> void RemoveSystem();
 
 private:
@@ -189,7 +191,8 @@ private:
 template<typename TComponent>
 inline ComponentID Component<TComponent>::GetComponentID()
 {
-	return s_nextComponentID++;
+	static ComponentID thisComponentID = s_nextComponentID++;
+	return thisComponentID;
 }
 
 
@@ -200,6 +203,8 @@ inline ComponentID Component<TComponent>::GetComponentID()
 template<typename TComponent>
 inline void System::RequireComponent()
 {
+	ComponentID signature = Component<TComponent>::GetComponentID();
+	m_systemComponentSignature.set(signature);
 }
 
 template<typename TComponent, typename ...TArgs>
@@ -239,11 +244,24 @@ inline void Registry::AddComponent(const Entity entity, TArgs&& ...args)
 	m_entityComponentSignatures[entity].set(componentID);
 }
 
+template<typename TComponent>
+inline TComponent& Registry::GetComponent(const Entity entity)
+{
+	if (entity >= m_numCreatedEntities)
+	{
+		throw "Entity does not exist!";
+	}
+
+	ComponentID componentID = Component<TComponent>::GetComponentID();
+	std::shared_ptr<ComponentPool<TComponent>> componentPoolPtr = std::static_pointer_cast<ComponentPool<TComponent>, IComponentPool>(m_componentPools[componentID]);
+	return componentPoolPtr->GetComponent(entity);
+}
+
 template<typename TSystem>
 inline void Registry::AddSystem()
 {
-	std::shared_ptr<TSystem> systemPtr = std::make_shared<TSystem>();
-	m_systems.push_back(systemPtr);
+	std::shared_ptr<TSystem> systemPtr = std::make_shared<TSystem>(*this);
+	m_systems.push_back(std::static_pointer_cast<System, TSystem>(systemPtr));
 }
 
 template<typename TComponent>
@@ -274,5 +292,21 @@ inline void ComponentPool<TComponent>::InsertComponent(const Entity entity, cons
 	else
 	{
 		throw "Entity already has this component!";
+	}
+}
+
+template<typename TComponent>
+inline TComponent& ComponentPool<TComponent>::GetComponent(const Entity entity)
+{
+	auto iterator = m_entityToComponentIndexMap.find(entity);
+	if (iterator != m_entityToComponentIndexMap.end())
+	{
+		size_t index = iterator->second;
+		return m_componentVector[index];
+	}
+
+	else
+	{
+		throw "Entity does not have this component!";
 	}
 }

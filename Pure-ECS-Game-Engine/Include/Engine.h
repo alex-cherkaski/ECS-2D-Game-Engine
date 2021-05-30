@@ -38,5 +38,7 @@ private:
 	SDL_Renderer* m_renderer;
 
 	Registry& m_registry;
+
+	unsigned m_millisecondsToLastFrame;
 };
 

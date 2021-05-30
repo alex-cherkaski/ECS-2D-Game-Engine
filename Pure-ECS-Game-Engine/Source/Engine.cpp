@@ -2,6 +2,7 @@
 #include "../Include/Engine.h"
 #include "../Include/Logger.h"
 #include "../Include/Constants.h"
+#include "../Include/DebugRenderSystem.h"
 
 Engine& Engine::GetEngineInstance()
 {
@@ -50,7 +51,9 @@ void Engine::Initialize()
 void Engine::LoadLevel(unsigned level)
 {
 	Entity entity = m_registry.CreateEntity();
-	m_registry.AddComponent<TransformComponent>(entity, glm::vec2(0, 0), glm::vec2(0, 0), 0.0f);
+	m_registry.AddComponent<TransformComponent>(entity, glm::vec2(0, 0), glm::vec2(1, 1), 0.0f);
+	m_registry.AddComponent<BoxColliderComponent>(entity, glm::vec2(0, 0), 50.0f, 50.0f);
+	m_registry.AddSystem<DebugRenderSystem>();
 }
 
 void Engine::Run()
@@ -70,7 +73,7 @@ void Engine::Destroy()
 	SDL_Quit();
 }
 
-Engine::Engine() : m_windowWidth(0), m_windowHeight(0), m_isRunning(false), m_window(nullptr), m_renderer(nullptr), m_registry(Registry::GetRegistryInstance())
+Engine::Engine() : m_windowWidth(0), m_windowHeight(0), m_isRunning(false), m_window(nullptr), m_renderer(nullptr), m_registry(Registry::GetRegistryInstance()), m_millisecondsToLastFrame(0)
 {
 }
 
@@ -105,11 +108,23 @@ void Engine::ProcessInput()
 
 void Engine::Update()
 {
+	float deltaTime = (SDL_GetTicks() - m_millisecondsToLastFrame) / 1000.0f;
+
+	m_registry.Update();
+
+
+	m_millisecondsToLastFrame = SDL_GetTicks();
 }
 
 void Engine::Render()
 {
 	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
 	SDL_RenderClear(m_renderer);
+
+	for (std::shared_ptr<System> systemPtr : m_registry.GetSystems())
+	{
+		systemPtr->Render(m_renderer);
+	}
+
 	SDL_RenderPresent(m_renderer);
 }

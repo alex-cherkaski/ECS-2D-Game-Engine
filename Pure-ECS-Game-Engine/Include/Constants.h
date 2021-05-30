@@ -1,4 +1,5 @@
 #pragma once
+#include "TextureColor.h"
 
 namespace Constants
 {
@@ -15,5 +16,12 @@ namespace Constants
 		extern const char* YELLOW;
 		extern const char* RED;
 		extern const char* RESET;
+	}
+
+	namespace TextureColors
+	{
+		extern const Color RED;
+		extern const Color GREEN;
+		extern const Color BLUE;
 	}
 }

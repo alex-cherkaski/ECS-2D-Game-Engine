@@ -7,15 +7,7 @@ IComponentPool::~IComponentPool()
 {
 }
 
-System::System(const Registry& registry) : m_registry(registry)
-{
-}
-
-void System::Update()
-{
-}
-
-void System::Render()
+System::System(Registry& registry) : m_registry(registry)
 {
 }
 
@@ -65,9 +57,11 @@ Entity Registry::CreateEntity()
 	return newEntity;
 }
 
-Registry::Registry() : m_numCreatedEntities(0)
+std::vector<std::shared_ptr<System>> Registry::GetSystems() const
 {
-
+	return m_systems;
 }
 
-
+Registry::Registry() : m_numCreatedEntities(0)
+{
+}

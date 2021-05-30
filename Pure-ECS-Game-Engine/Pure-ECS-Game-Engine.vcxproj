@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\DebugRenderSystem.cpp" />
     <ClCompile Include="Source\Constants.cpp" />
     <ClCompile Include="Source\ECS.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
@@ -156,12 +157,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Include\DebugRenderSystem.h" />
     <ClInclude Include="Include\Components.h" />
     <ClInclude Include="Include\Constants.h" />
     <ClInclude Include="Include\ECS.h" />
     <ClInclude Include="Include\Logger.h" />
     <ClInclude Include="Include\Engine.h" />
     <ClInclude Include="Include\stdafx.h" />
+    <ClInclude Include="Include\TextureColor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
